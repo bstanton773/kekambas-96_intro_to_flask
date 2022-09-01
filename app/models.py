@@ -29,6 +29,15 @@ class User(db.Model, UserMixin):
         self.password = generate_password_hash(password)
         db.session.commit()
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "email": self.email,
+            "username": self.username,
+            "date_created": self.date_created,
+            "posts": [p.to_dict() for p in self.posts.all()]
+        }
+
 
 @login.user_loader
 def load_user(user_id):

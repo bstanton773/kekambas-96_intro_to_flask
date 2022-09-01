@@ -1,6 +1,6 @@
 from . import api
 from flask import jsonify, request
-from app.models import Post
+from app.models import Post, User
 
 
 @api.route('/')
@@ -41,3 +41,10 @@ def create_post():
     # Create new instance of post with data
     new_post = Post(title=title, body=body, user_id=user_id)
     return jsonify(new_post.to_dict()), 201
+
+
+# Get a user by user_id
+@api.route('/users/<user_id>')
+def get_user(user_id):
+    user = User.query.get_or_404(user_id)
+    return jsonify(user.to_dict())
