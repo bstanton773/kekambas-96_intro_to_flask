@@ -3,6 +3,7 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_cors import CORS
 
 
 app = Flask(__name__)
@@ -17,6 +18,8 @@ login = LoginManager(app)
 login.login_view = 'login' # Tells the login manager which endpoint to redirect if someone if not logged in
 login.login_message = 'You must be logged in to do that you silly goose'
 login.login_message_category = 'danger'
+
+CORS(app)
 
 from app.blueprints.api import api
 app.register_blueprint(api)
